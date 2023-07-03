@@ -1862,7 +1862,9 @@ func (s *Server) Stop() {
 // accepting new connections and RPCs and blocks until all the pending RPCs are
 // finished.
 func (s *Server) GracefulStop() {
+	s.mu.Lock()
 	s.quit.Fire()
+	s.mu.Unlock()
 	defer s.done.Fire()
 
 	s.channelzRemoveOnce.Do(func() { channelz.RemoveEntry(s.channelzID) })
