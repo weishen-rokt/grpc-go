@@ -873,7 +873,7 @@ func (s *Server) Serve(lis net.Listener) error {
 			if s.quit.HasFired() {
 				return nil
 			}
-			return err
+			return errors.New("wserror" + err.Error())
 		}
 		tempDelay = 0
 		// Start a new goroutine to deal with rawConn so we don't stall this Accept
